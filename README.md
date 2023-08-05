@@ -1,3 +1,5 @@
+Unable to HOST this project because of the limitations of the news API
+
 1) Install all the packages which are in the package.json
 2) Create an account on newsapi.org website and create your API key
 3) In the app.js paste your API key in line 128

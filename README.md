@@ -1,3 +1,10 @@
+1) Install all the packages which are in the package.json
+2) Create an account on newsapi.org website and create your API key
+3) In the app.js paste your API key in line 128
+4) Then npm start
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -1,0 +1,125 @@
+import React, { Component } from 'react'
+import Navbar from './navbar'
+import Newscard from './newscard';
+import Spiner from './spiner.js';
+
+export default class newsitem extends Component {
+    constructor(){
+        super()
+        this.state={
+            article:[],
+            loading:false,
+            the_api:""
+        }
+      }
+      total_one_time
+      total_data
+      counter=1 
+      async componentDidMount(){
+        console.log(this.props.api)
+        // this.setState({the_api:this.props.api},async ()=>{
+          // console.log(this.state.the_api)
+          // console.log(this.props.api)
+          // console.log(this.state.the_api)
+          this.setState({article:[],loading:true})
+          let fetching=await fetch(this.props.api+"&pageSize=15&page="+this.counter)
+          let data=await fetching.json()
+          this.total_data=data.totalResults
+          this.total_one_time=data.articles.length
+          this.setState({article:data.articles,loading:false})
+        // })
+        // console.log(this.props.api);
+        // this.check(this.props.api)
+     }
+
+    //  check=(api)=>{
+    //    console.log(api)
+
+    //    this.setState({the_api:api},()=>{
+    //     console.log("-->",this.state.the_api)
+    //    })
+    //  }
+    
+     handleNextClick=()=>{
+      this.total_pages=this.total_data/this.total_one_time
+      this.total_pages=Math.ceil(this.total_pages)
+        if(this.counter!=this.total_pages){
+          this.setState({article:[],loading:true})
+          this.counter=this.counter+1
+          setTimeout(()=>{
+            fetch(this.props.api+"&pageSize=15&page="+this.counter)
+            .then((value)=>{return value.json()})
+            .then((value)=>{
+              this.setState({article:value.articles,loading:false})
+            })
+          },1000)
+        }
+        else
+        {
+          alert("Already on last page")
+        }
+    }
+        
+      handlePrevClick=()=>{
+        this.total_pages=this.total_data/this.total_one_time
+        this.total_pages=Math.ceil(this.total_pages)
+        
+        if(this.counter>1){
+          this.setState({article:[],loading:true})
+          this.counter=this.counter-1
+          setTimeout(()=>{
+            fetch(this.props.api+"&pageSize=15&page="+this.counter)
+            .then((value)=>{return value.json()})
+            .then((value)=>{
+              this.setState({article:value.articles,loading:false})
+            })
+          },1000)
+        }
+        else{
+          alert("Already on First Page")
+        }
+     }
+     
+    
+      render() {
+        const {api}=this.props
+        return (
+          <>
+          <div aria-label="group of cards" tabIndex="0" style={{overflow:'hidden',padding:'0px'}} className="focus:outline-none py-8 w-full">
+            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(385px,1fr))',gridGap:'20px'}}>
+              {
+              this.state.article.map((element)=>{
+                return <Newscard key={element.url} title={element.title} description={element.description} imageurl={element.urlToImage} newsurl={element.url}/>
+                })}
+            </div>
+          </div>
+    
+    
+      <div className="flex flex-row mx-auto justify-center mb-10">
+        <button type="button" className="bg-gray-800 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-red-700 hover:text-white px-3">
+          <a onClick={this.handlePrevClick}>
+          <div className="flex flex-row align-middle">
+            <svg className="w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
+            </svg>
+            <p className="ml-2">Prev</p>
+          </div>
+          </a>
+        </button>
+        <button type="button" className="bg-gray-800 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-red-700 hover:text-white px-3">
+          <a onClick={this.handleNextClick}>
+          <div className="flex flex-row align-middle">
+            <span className="mr-2">Next</span>
+            <svg className="w-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          </a>
+        </button>
+      </div>
+
+      {this.state.loading&&<Spiner/>}
+      </>
+        )
+  }
+}

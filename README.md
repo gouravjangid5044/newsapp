@@ -3,7 +3,11 @@
 3) In the app.js paste your API key in line 128
 4) Then npm start
 
-https://github.com/gouravjangid5044/newsapp/assets/67137827/d10b35a8-b649-4bb7-bf8e-f89d5e0c8a15
+
+
+https://github.com/gouravjangid5044/newsapp/assets/67137827/df584dd5-9e2a-426a-81a9-71a0e69697de
+
+
 
 # Getting Started with Create React App
 

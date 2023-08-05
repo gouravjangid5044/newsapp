@@ -125,7 +125,7 @@ export default class App extends Component {
     let merge=this.final_arr.map((item)=>(item)).join("")
     //console.log("-->",merge)
 
-    let val="https://newsapi.org/v2/"+this.state.selectedValue+"/?"+merge+`apikey=a1295b60e89d45488c1a4f5f3c1eb56f`
+    let val="https://newsapi.org/v2/"+this.state.selectedValue+"/?"+merge+`apikey=YOUR_KEY`
 
     //console.log(val)
 
